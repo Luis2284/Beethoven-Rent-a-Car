@@ -1,0 +1,57 @@
+<div class="p-8">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-slate-800 dark:text-white">Historial del Vehículo</h1>
+        <p class="text-slate-500">Detalles de rentas y ganancias</p>
+    </div>
+
+    <div *ngIf="history$ | async as history" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+                class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Vehículo</div>
+                <div class="text-xl font-bold text-slate-800 dark:text-white">{{history.vehicle.brand}}
+                    {{history.vehicle.model}}</div>
+                <div class="text-slate-400 font-mono">{{history.vehicle.plate}}</div>
+            </div>
+            <div
+                class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Ingresos Totales</div>
+                <div class="text-2xl font-bold text-emerald-600">${{history.totalEarnings | number}}</div>
+            </div>
+            <div
+                class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">Total Viajes</div>
+                <div class="text-2xl font-bold text-blue-600">{{history.totalTrips}}</div>
+            </div>
+        </div>
+
+        <div
+            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+                    <tr>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase">Fecha</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase">Cliente</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase">Días</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase">Ingreso</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase text-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                    <tr *ngFor="let rental of history.rentals">
+                        <td class="p-4 text-slate-700 dark:text-slate-300">{{rental.startDate | date:'shortDate'}}</td>
+                        <td class="p-4 text-slate-700 dark:text-slate-300">{{rental.client?.name}}</td>
+                        <td class="p-4 text-slate-700 dark:text-slate-300">{{calculateDays(rental.startDate.toString(),
+                            rental.endDate.toString())}} días</td>
+                        <td class="p-4 text-emerald-600 font-bold">${{rental.totalCost | number}}</td>
+                        <td class="p-4 text-center">
+                            <span class="px-2 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600">
+                                {{rental.status}}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

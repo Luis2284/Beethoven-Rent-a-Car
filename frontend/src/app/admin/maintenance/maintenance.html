@@ -1,0 +1,102 @@
+<div class="animate-enter max-w-7xl mx-auto p-8">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">Gestión de Mantenimiento</h1>
+            <p class="text-slate-500 dark:text-slate-400 font-medium mt-1">Vehículos que requieren atención preventiva
+            </p>
+        </div>
+        <div class="flex gap-3">
+            <button (click)="loadPending()"
+                class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors flex items-center gap-2">
+                <span class="material-symbols-outlined">refresh</span> Actualizar
+            </button>
+            <a routerLink="/maintenance/config"
+                class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-slate-900/20 flex items-center gap-2 transition-all">
+                <span class="material-symbols-outlined">settings</span> Configuración
+            </a>
+        </div>
+    </div>
+
+    <!-- PENDING LIST -->
+    <div
+        class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden mb-8">
+        <div
+            class="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/20">
+            <h3 class="font-bold text-lg text-slate-800 dark:text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-amber-500">warning</span>
+                Alertas Pendientes
+            </h3>
+            <span
+                class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded-lg">{{pendingMaintenances.length}}
+                Vehículos</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-700">
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Vehículo</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Mantenimiento</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Km Actual
+                        </th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Próximo Km
+                        </th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Estado
+                        </th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                    <tr *ngFor="let item of pendingMaintenances"
+                        class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors group">
+                        <td class="p-4">
+                            <div class="font-bold text-slate-800 dark:text-white">{{item.brand}} {{item.model}}</div>
+                            <div
+                                class="text-xs font-mono bg-slate-100 dark:bg-slate-700 text-slate-600 px-1.5 py-0.5 rounded w-fit mt-1">
+                                {{item.plate}}</div>
+                        </td>
+                        <td class="p-4 font-medium text-slate-700 dark:text-slate-300">{{item.maintenanceType}}</td>
+                        <td class="p-4 text-right font-mono text-slate-600 dark:text-slate-400">{{item.currentMileage |
+                            number}}</td>
+                        <td class="p-4 text-right font-mono text-slate-600 dark:text-slate-400">{{item.nextDueKm |
+                            number}}</td>
+                        <td class="p-4 text-center">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold border"
+                                [ngClass]="getSeverityClass(item.status)">
+                                <span class="material-symbols-outlined text-sm font-bold"
+                                    *ngIf="item.status === 'Overdue'">error</span>
+                                <span class="material-symbols-outlined text-sm font-bold"
+                                    *ngIf="item.status === 'Warning'">schedule</span>
+                                {{item.status === 'Overdue' ? 'VENCIDO' : 'PRÓXIMO'}}
+                            </span>
+                            <div class="text-[10px] text-slate-400 mt-1 font-medium" *ngIf="item.remainingKm < 0">
+                                Pasado por {{item.remainingKm * -1 | number}} km
+                            </div>
+                            <div class="text-[10px] text-slate-400 mt-1 font-medium" *ngIf="item.remainingKm >= 0">
+                                Faltan {{item.remainingKm | number}} km
+                            </div>
+                        </td>
+                        <td class="p-4 text-center">
+                            <button
+                                class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-bold py-1.5 px-3 rounded-lg text-xs transition-colors shadow-sm flex items-center justify-center gap-1 mx-auto">
+                                <span class="material-symbols-outlined text-sm">check</span>
+                                Registrar
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="pendingMaintenances.length === 0 && !isLoading">
+                        <td colspan="6" class="p-12 text-center text-slate-500">
+                            <div
+                                class="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-500">
+                                <span class="material-symbols-outlined text-3xl">sentiment_satisfied</span>
+                            </div>
+                            <p class="font-medium text-slate-600 dark:text-slate-300">¡Todo en orden!</p>
+                            <p class="text-sm mt-1">No hay mantenimientos pendientes por ahora.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

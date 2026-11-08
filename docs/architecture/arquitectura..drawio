@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="Electron" modified="2026-01-27T14:10:00.000Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="r_valid_etag" version="21.6.8" type="device">
+  <diagram id="C4-Context" name="Contexto del Sistema">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object label="Administrador" type="Person" description="Gestiona vehículos, alquileres y contratos" id="admin">
+          <mxCell style="shape=mxgraph.c4.person;whiteSpace=wrap;html=1;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];resizable=0;" vertex="1" parent="1">
+            <mxGeometry x="120" y="240" width="120" height="130" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Cliente" type="Person" description="Alquila vehículos y visualiza contratos activos" id="client">
+          <mxCell style="shape=mxgraph.c4.person;whiteSpace=wrap;html=1;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];resizable=0;" vertex="1" parent="1">
+            <mxGeometry x="120" y="80" width="120" height="130" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="Los Carros de Beto" type="System" description="Sistema de Gestión de Alquiler de Vehículos" id="system">
+          <mxCell style="shape=mxgraph.c4.system;whiteSpace=wrap;html=1;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];resizable=0;" vertex="1" parent="1">
+            <mxGeometry x="360" y="160" width="160" height="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="API SIMIT" type="System_Ext" description="Verifica licencias de conducción y multas" id="simit">
+          <mxCell style="shape=mxgraph.c4.system;whiteSpace=wrap;html=1;metaEdit=1;fillColor=#8C8C8C;strokeColor=#4F4F4F;fontColor=#FFFFFF;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];resizable=0;" vertex="1" parent="1">
+            <mxGeometry x="640" y="80" width="160" height="110" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="API Google Gemini" type="System_Ext" description="Provee análisis y asistencia con IA" id="gemini">
+          <mxCell style="shape=mxgraph.c4.system;whiteSpace=wrap;html=1;metaEdit=1;fillColor=#8C8C8C;strokeColor=#4F4F4F;fontColor=#FFFFFF;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];resizable=0;" vertex="1" parent="1">
+            <mxGeometry x="640" y="240" width="160" height="110" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="rel1" value="Gestiona flota y alquileres" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="admin" target="system">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel2" value="Visualiza estado y contratos" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="client" target="system">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel3" value="Verifica licencias" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="system" target="simit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel4" value="Genera insights" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="system" target="gemini">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="C4-Container" name="Contenedores">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="c0" />
+        <mxCell id="c1" parent="c0" />
+        
+        <!-- User -->
+        <object label="Usuario" type="Person" description="Administrador o Cliente" id="user">
+             <mxCell style="shape=mxgraph.c4.person;whiteSpace=wrap;html=1;metaEdit=1;" vertex="1" parent="c1">
+            <mxGeometry x="80" y="200" width="120" height="130" as="geometry" />
+          </mxCell>
+        </object>
+
+        <!-- Boundary -->
+        <mxCell id="boundary" value="Plataforma Los Carros de Beto" style="shape=mxgraph.c4.system_boundary;whiteSpace=wrap;html=1;dashed=1;dashPattern=12 12;fillColor=none;" vertex="1" parent="c1">
+            <mxGeometry x="280" y="80" width="400" height="400" as="geometry" />
+        </mxCell>
+
+        <!-- Containers -->
+        <object label="Single Page Application" type="Container" description="Angular 21" id="spa">
+          <mxCell style="shape=mxgraph.c4.container;whiteSpace=wrap;html=1;metaEdit=1;fillColor=#438DD5;strokeColor=#104E8B;fontColor=#FFFFFF;" vertex="1" parent="c1">
+            <mxGeometry x="320" y="120" width="180" height="100" as="geometry" />
+          </mxCell>
+        </object>
+
+        <object label="API Backend" type="Container" description=".NET 10" id="api">
+          <mxCell style="shape=mxgraph.c4.container;whiteSpace=wrap;html=1;metaEdit=1;fillColor=#438DD5;strokeColor=#104E8B;fontColor=#FFFFFF;" vertex="1" parent="c1">
+             <mxGeometry x="320" y="280" width="180" height="100" as="geometry" />
+          </mxCell>
+        </object>
+
+        <object label="Base de Datos" type="ContainerDb" description="SQL Server" id="db">
+           <mxCell style="shape=mxgraph.c4.database;whiteSpace=wrap;html=1;metaEdit=1;fillColor=#438DD5;strokeColor=#104E8B;fontColor=#FFFFFF;shape=cylinder3;" vertex="1" parent="c1">
+             <mxGeometry x="580" y="280" width="120" height="100" as="geometry" />
+           </mxCell>
+        </object>
+
+        <!-- Relations -->
+        <mxCell id="cr1" value="Usa (HTTPS)" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" parent="c1" source="user" target="spa">
+           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cr2" value="JSON/HTTPS" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" parent="c1" source="spa" target="api">
+           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cr3" value="EF Core / SQL" style="edgeStyle=orthogonalEdgeStyle;html=1;" edge="1" parent="c1" source="api" target="db">
+           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

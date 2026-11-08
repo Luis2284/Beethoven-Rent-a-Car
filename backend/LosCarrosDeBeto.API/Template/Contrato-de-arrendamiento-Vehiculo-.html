@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato de Arrendamiento de Vehículo Automotor</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.5;
+            color: #000;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .paper {
+            background-color: #fff;
+            width: 210mm;
+            /* Tamaño A4 aproximado */
+            min-height: 297mm;
+            padding: 25mm;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16pt;
+            /* text-decoration: underline; Removed underline to match typical modern styles or keep if preferred, image has no underline but colored text? Actually image 1 HAS NO underline on H1, just Blue text */
+            color: #4472C4;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+            /* Image shows Title Case not UPPERCASE for "Contrato de..."? Wait image shows "Contrato de Arrendamiento de Vehículo" */
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 14pt;
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #4472C4;
+            text-transform: capitalize;
+        }
+
+        p {
+            text-align: justify;
+            font-size: 11pt;
+            margin-bottom: 15px;
+        }
+
+        .field {
+            display: inline-block;
+            border-bottom: 1px solid #000;
+            min-width: 50px;
+            padding: 0 5px;
+            vertical-align: bottom;
+            font-weight: normal;
+            /* Ensure value is not bold unless specified */
+        }
+
+        .vehicle-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .vehicle-item {
+            display: flex;
+            align-items: baseline;
+        }
+
+        .vehicle-item .label {
+            font-weight: bold;
+            width: 80px;
+            /* Fixed width for alignment */
+        }
+
+        .vehicle-item .field {
+            flex-grow: 0;
+            min-width: 250px;
+            margin-left: 10px;
+        }
+
+        .clause {
+            font-weight: bold;
+        }
+
+        /* ... existing styles ... */
+        .signature-container {
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .signature-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+        }
+
+        .signature-box {
+            width: 45%;
+        }
+
+        .line {
+            border-top: 1px solid #000;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="paper">
+        <h1>Contrato de Arrendamiento de Vehículo</h1>
+        <h2>Automotor</h2>
+
+        <p>
+            Entre los suscritos a saber <span class="field" style="min-width: 250px;">{{OWNER_NAME}}</span>, mayor de
+            edad, vecino de <span class="field" style="min-width: 150px;">{{OWNER_ADDRESS}}</span>, identificado con la
+            cédula de ciudadanía N.° <span class="field" style="min-width: 150px;">{{OWNER_DOC}}</span> y con Licencia
+            de Conducción Vigente n. <span class="field" style="min-width: 150px;">{{OWNER_LICENSE}}</span> quien en
+            adelante se denominará El <strong>ARRENDADOR</strong>, por una parte, y por la otra <span class="field"
+                style="min-width: 200px;">{{CLIENT_NAME}}</span> identificado con Cédula de Ciudadanía N.° <span
+                class="field" style="min-width: 150px;">{{CLIENT_DOC}}</span> domiciliado en <span class="field"
+                style="min-width: 150px;">{{CLIENT_ADDRESS}}</span>, quien actua en nombre propio, mayor de edad, vecino
+            de <span class="field" style="min-width: 150px;">{{CLIENT_CITY}}</span>, teléfonos <span class="field"
+                style="min-width: 150px;">{{CLIENT_PHONE}}</span>
+            quien en adelante se denominará El <strong>ARRENDATARIO</strong> se ha celebrado el contrato de
+            arrendamiento de Vehículo Automotor, que se rige por la legislación comercial colombiana y además por las
+            siguientes cláusulas:
+        </p>
+        <p><span class="clause">Primera.</span> El Arrendador entrega al Arrendatario en alquiler un Vehículo Automotor
+            de las siguientes características:</p>
+
+        <div class="vehicle-details">
+            <div class="vehicle-item"><span class="label">Placa:</span> <span class="field">{{VEHICLE_PLATE}}</span>
+            </div>
+            <div class="vehicle-item"><span class="label">Marca:</span> <span class="field">{{VEHICLE_BRAND}}</span>
+            </div>
+            <div class="vehicle-item"><span class="label">Color:</span> <span class="field">{{VEHICLE_COLOR}}</span>
+            </div>
+            <div class="vehicle-item"><span class="label">Modelo:</span> <span class="field">{{VEHICLE_MODEL}}</span>
+            </div>
+        </div>
+
+        <p><span class="clause">Segunda.</span> El vehículo se encuentra en perfecto estado de funcionamiento, externa e
+            internamente en buen estado, además de una llanta de repuesto y herramientas de desvare cómo gato, cruceta,
+            etc.</p>
+
+        <p><span class="clause">Tercera.</span> El arrendamiento del vehículo automotor descrito en el punto anterior
+            será de $ <span class="field" style="min-width: 100px;">{{DAILY_RATE}}</span> diarios, que se pagarán al
+            momento de llevarse el vehículo.</p>
+
+        <p><strong>Parágrafo uno:</strong> Este contrato es por un término de <span class="field"
+                style="min-width: 120px;">{{DAYS_COUNT}} días</span> pero podrá ser prorrogado de mutuo acuerdo con una
+            antelación de <span class="field" style="min-width: 120px;">24 horas</span>.</p>
+
+        <p><strong>Parágrafo dos:</strong> En caso de prórroga, el valor mensual del arriendo del vehículo automotor
+            tendrá un incremento del <span class="field" style="min-width: 50px;">10%</span>.</p>
+
+        <p><span class="clause">Cuarta. Destinación:</span> El Arrendatario destinará el vehículo automotor al
+            transporte de (personal), de tal manera, que el arrendatario no podrá subarrendar, ni permitir que terceros
+            lo utilicen. De igual manera, el Arrendatario no puede violar los límites de carga o pasajeros que establece
+            el fabricante del vehículo automotor.</p>
+
+        <p><span class="clause">Quinta. Conducción:</span> El vehículo automotor será manejado por (el mismo arrendador,
+            lo cual no genera subordinación, ni vínculo contractual o será manejado por el mismo arrendatario o quien
+            éste delegue).</p>
+
+        <p><span class="clause">Sexta.</span> El Arrendatario se constituye como depositario y por ende custodio del
+            vehículo automotor, asumiendo todas las responsabilidades civiles y penales que tal condición implica, hasta
+            tanto proceda la debida devolución al Arrendador.</p>
+
+        <p><span class="clause">Séptima. Devolución:</span> Al finalizar el término del contrato, el Arrendatario deberá
+            devolver el vehículo automotor en el mismo estado en que fue recibido, salvo el desgaste natural del
+            vehículo automotor y en el domicilio del Arrendador.</p>
+
+        <p><span class="clause">Octava. Responsabilidades del Arrendatario:</span> Mientras esté en poder del
+            Arrendatario el vehículo automotor, éste será responsable de:</p>
+        <p>a) Por cualquier daño causado al vehículo o con éste sobre propiedad de terceros durante el tiempo que el
+            vehículo automotor esté en poder del Arrendatario.</p>
+        <p>b) Por los daños causados con el vehículo automotor a terceras personas durante el tiempo que el vehículo
+            automotor esté en poder del Arrendatario.</p>
+        <p>c) Por los daños causados con el vehículo automotor sobre bienes o personas transportadas en el vehículo
+            automotor durante el tiempo que el vehículo automotor esté en poder del Arrendatario.</p>
+        <p>d) Por todas las infracciones al Código Nacional de Tránsito y Transporte cometidas durante el tiempo que el
+            vehículo automotor esté en poder del Arrendatario.</p>
+
+        <p><strong>Parágrafo:</strong> En caso de arreglos mecánicos o de lámina y pintura que el Arrendatario quiera
+            hacer sobre el vehículo automotor, deberá informar previamente al Arrendador, quien podrá oponerse respecto
+            a la clase, marca o procedencia de repuestos o métodos que se vayan a usar.</p>
+
+        <p><span class="clause">Novena. Seguros Obligatorios -SOAT-:</span> El valor del seguro del SOAT, corresponde su
+            pago al Arrendador, el cual tiene como obligación mantenerlo siempre vigente.</p>
+
+        <p><strong>Parágrafo:</strong> En caso que el Arrendador deje vencer el SOAT, el Arrendatario podrá comprarlo y
+            su valor descontarlo del siguiente canon de arrendamiento.</p>
+
+        <p><span class="clause">Décima.</span> El incumplimiento de cualquier obligación o prohibición descritas en este
+            contrato, da derecho al Arrendador a declarar rescindido éste contrato de arrendamiento.</p>
+
+        <p><span class="clause">Décima Primera. Garantía.</span> El arrendatario entregará en calidad de garantía la
+            suma de $ <span class="field" style="min-width: 100px;">{{GUARANTEE_AMOUNT}}</span> el cual el Arrendador,
+            devolverá siempre y cuando al final del contrato el vehículo automotor se devuelva en el mismo estado en que
+            fue entregado, salvo el desgaste natural por su uso, al igual que estar al día en los cánones de
+            arrendamiento y tampoco existir ninguna deuda civil o penal que pueda resultar siendo el vehículo objeto de
+            garantía para su pago.</p>
+
+        <p><span class="clause">Décima Segunda: Gastos:</span> Los gastos de impuestos de timbre y demás que se
+            ocasionen por el otorgamiento de este contrato, sus prórrogas y renovaciones serán asumidos por partes
+            iguales entre los contratantes.</p>
+
+        <p><span class="clause">Décima Tercera. Notificaciones:</span> Las notificaciones que cualquiera de las partes
+            deseara a la otra, deben formularse con certificación de entrega a las siguientes direcciones:</p>
+        <p>El Arrendatario en la <span class="field" style="min-width: 250px;">{{CLIENT_ADDRESS}}</span> de la ciudad de
+            <span class="field" style="min-width: 100px;">{{CLIENT_CITY}}</span> teléfonos, <span class="field"
+                style="min-width: 100px;">{{CLIENT_PHONE}}</span> celular <span class="field"
+                style="min-width: 100px;">{{CLIENT_CELL}}</span>
+        </p>
+        <p>El Arrendador en la <span class="field" style="min-width: 250px;">{{OWNER_ADDRESS}}</span> de la ciudad de
+            <span class="field" style="min-width: 100px;">{{OWNER_CITY}}</span> teléfonos, <span class="field"
+                style="min-width: 100px;">{{OWNER_PHONE}}</span> celular <span class="field"
+                style="min-width: 100px;">{{OWNER_CELL}}</span>
+        </p>
+
+        <p><span class="clause">Décima Cuarta: Cláusula compromisoria. Tribunal de Arbitramento.</span> En caso de
+            conflicto entre las partes de este Contrato de Arrendamiento de vehículo automotor relativa a este contrato,
+            su ejecución y liquidación, deberá agotarse una diligencia de conciliación ante cualquier entidad autorizada
+            para efectuarla, si esta fracasa, se llevará las diferencias ante un Tribunal de Arbitramento del domicilio
+            del Arrendatario, el cual será pagado por el convocante.</p>
+
+        <p>En <span class="field" style="min-width: 150px;">{{CONTRACT_CITY}}</span> (Ciudad), a los <span class="field"
+                style="min-width: 40px;">{{DAY}}</span> días del mes de <span class="field"
+                style="min-width: 100px;">{{MONTH}}</span> de <span class="field"
+                style="min-width: 60px;">{{YEAR}}</span></p>
+
+        <div class="signature-container">
+            <div class="signature-row">
+                <div class="signature-box">
+                    <div class="line"></div>
+                    <strong>Arrendador: {{OWNER_NAME}}</strong><br>
+                    C.C. {{OWNER_DOC}}
+                </div>
+                <div class="signature-box">
+                    <div class="line"></div>
+                    <strong>Arrendatario: {{CLIENT_NAME}}</strong><br>
+                    C.C. {{CLIENT_DOC}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

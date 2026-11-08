@@ -1,0 +1,29 @@
+<div class="p-8">
+    <h1 class="text-2xl font-bold mb-6 text-slate-800 dark:text-white">Gestión de Multas</h1>
+
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-8 max-w-xl">
+        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Consulta SIMIT (Placa)</label>
+        <div class="flex gap-4">
+            <input [(ngModel)]="searchPlate" type="text" placeholder="AAA123"
+                class="flex-1 px-4 py-2 border rounded-lg bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:text-white uppercase">
+            <button (click)="checkSimit()" [disabled]="isLoading || !searchPlate"
+                class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-blue-700 transition disabled:opacity-50">
+                {{ isLoading ? 'Consultando...' : 'Consultar' }}
+            </button>
+        </div>
+
+        <div *ngIf="simitResult" class="mt-4 p-4 bg-red-50 text-red-800 border border-red-200 rounded-lg">
+            <div class="font-bold">Multa Encontrada!</div>
+            <div>Monto: ${{simitResult.amount}}</div>
+            <div>Motivo: {{simitResult.description}}</div>
+            <button (click)="registerFine()"
+                class="mt-2 bg-red-600 text-white px-4 py-1 rounded text-sm font-bold hover:bg-red-700">Registrar en
+                Sistema</button>
+        </div>
+
+        <div *ngIf="simitNotFound" class="mt-4 p-4 bg-green-50 text-green-800 border border-green-200 rounded-lg">
+            <div class="font-bold flex items-center gap-2"><span class="material-symbols-outlined">check_circle</span>
+                Sin multas pendientes</div>
+        </div>
+    </div>
+</div>

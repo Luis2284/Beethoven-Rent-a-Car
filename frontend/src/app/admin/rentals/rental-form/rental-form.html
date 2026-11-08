@@ -1,0 +1,190 @@
+<div class="animate-enter flex justify-center p-8">
+    <div
+        class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8">
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">Nuevo Alquiler</h1>
+            <p class="text-slate-500 dark:text-slate-400 font-medium">Registra la salida de un vehículo</p>
+        </div>
+
+        <form [formGroup]="rentalForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6">
+
+            <!-- Selection Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Client Select -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Cliente</label>
+                    <div class="relative">
+                        <select formControlName="clientId"
+                            class="w-full pl-4 pr-10 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none cursor-pointer">
+                            <option value="">Seleccione un cliente...</option>
+                            <option *ngFor="let client of clients" [value]="client.id">
+                                {{client.name}} ({{client.document}})
+                            </option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-4 top-3.5 pointer-events-none text-slate-400">expand_more</span>
+                    </div>
+                    <p *ngIf="rentalForm.get('clientId')?.touched && rentalForm.get('clientId')?.hasError('required')"
+                        class="text-red-500 text-xs mt-1 font-medium">Requerido</p>
+                </div>
+
+                <!-- Vehicle Select -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Vehículo</label>
+                    <div class="relative">
+                        <select formControlName="vehicleId"
+                            class="w-full pl-4 pr-10 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none cursor-pointer">
+                            <option value="">Seleccione un vehículo...</option>
+                            <option *ngFor="let vehicle of vehicles" [value]="vehicle.id">
+                                {{vehicle.brand}} {{vehicle.model}} - {{vehicle.plate}}
+                            </option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-4 top-3.5 pointer-events-none text-slate-400">expand_more</span>
+                    </div>
+                    <p *ngIf="rentalForm.get('vehicleId')?.touched && rentalForm.get('vehicleId')?.hasError('required')"
+                        class="text-red-500 text-xs mt-1 font-medium">Requerido</p>
+                </div>
+            </div>
+
+            <!-- Vehicle Owner Info / Warning -->
+            <div *ngIf="selectedVehicle" class="animate-enter">
+                <!-- CASE 1: Has Owner -->
+                <div class="p-4 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl flex justify-between items-center"
+                    *ngIf="selectedVehicle.administrator">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-600 rounded-lg">
+                            <span class="material-symbols-outlined">verified_user</span>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-800 dark:text-white text-sm">Propietario: {{
+                                selectedVehicle.administrator.name }}</div>
+                            <div class="text-xs text-slate-500">Doc: {{ selectedVehicle.administrator.document }}</div>
+                        </div>
+                    </div>
+                    <button type="button" (click)="enableOwnerEdit()"
+                        class="text-blue-600 hover:bg-blue-50 px-3 py-1.5 rounded-lg text-sm font-bold transition-colors">
+                        Cambiar
+                    </button>
+                </div>
+
+                <!-- CASE 2: No Owner -->
+                <div class="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl"
+                    *ngIf="!selectedVehicle.administrator">
+                    <div class="flex items-center gap-2 text-amber-700 dark:text-amber-500 font-bold text-sm mb-3">
+                        <span class="material-symbols-outlined">warning</span>
+                        <span>Vehículo sin administrador asignado.</span>
+                    </div>
+
+                    <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2">Seleccione el
+                        propietario para este alquiler:</label>
+                    <div class="relative">
+                        <select formControlName="assignAdminId"
+                            class="w-full pl-4 pr-10 py-3 bg-white dark:bg-slate-900 border border-amber-300 dark:border-amber-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all appearance-none cursor-pointer">
+                            <option value="">Seleccione un propietario...</option>
+                            <option *ngFor="let admin of administrators" [value]="admin.id">
+                                {{admin.name}}
+                            </option>
+                        </select>
+                        <span
+                            class="material-symbols-outlined absolute right-4 top-3.5 pointer-events-none text-slate-400">expand_more</span>
+                    </div>
+                    <p class="text-[10px] text-amber-600 dark:text-amber-500 mt-1 pl-1">El vehículo pasará temporalmente
+                        a nombre de este administrador.</p>
+                </div>
+            </div>
+
+            <!-- Dates Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Fecha Inicio</label>
+                    <input type="date" formControlName="startDate"
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Fecha Fin
+                        Estimada</label>
+                    <input type="date" formControlName="endDate"
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium">
+                </div>
+            </div>
+
+            <!-- Financials Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Tarifa Diaria
+                        ($)</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-slate-500 font-bold">$</span>
+                        <input type="number" formControlName="dailyRate" placeholder="150000"
+                            class="w-full pl-8 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Kilometraje
+                        Inicial</label>
+                    <input type="number" formControlName="initialMileage"
+                        class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Valor de Garantía
+                        (Depósito)</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-slate-500 font-bold">$</span>
+                        <input type="number" formControlName="guaranteeAmount" placeholder="1000000"
+                            class="w-full pl-8 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Ciudad del
+                        Contrato</label>
+                    <div class="relative">
+                        <input type="text" formControlName="contractCity" placeholder="Ej. Becerril"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">location_city</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload -->
+            <div class="p-6 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                <div class="flex items-center gap-3 mb-2 text-blue-600 font-bold">
+                    <span class="material-symbols-outlined">attachment</span>
+                    <span>Contrato Firmado (Opcional)</span>
+                </div>
+                <p class="text-xs text-slate-500 mb-4">Cargue el PDF o imagen del contrato firmado por el cliente.</p>
+
+                <div class="flex items-center gap-4">
+                    <button type="button" (click)="fileInput.click()"
+                        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 text-sm font-medium px-4 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                        Seleccionar Archivo
+                    </button>
+                    <span class="text-xs font-bold text-emerald-600 flex items-center gap-1"
+                        *ngIf="rentalForm.get('signedContractUrl')?.value">
+                        <span class="material-symbols-outlined text-base">check_circle</span> Archivo cargado
+                    </span>
+                    <input #fileInput type="file" (change)="onFileSelected($event)" accept=".pdf,.jpg,.jpeg,.png"
+                        class="hidden">
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-700 mt-2">
+                <button type="button" routerLink="/rentals"
+                    class="px-6 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    CANCELAR
+                </button>
+                <button type="submit" [disabled]="rentalForm.invalid || isLoading"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-xl shadow-lg shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform active:scale-95 flex items-center gap-2">
+                    <span *ngIf="isLoading"
+                        class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    {{ isLoading ? 'GUARDANDO...' : 'REGISTRAR SALIDA' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

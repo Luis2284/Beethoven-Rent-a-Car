@@ -1,0 +1,6 @@
+@LosCarrosDeBeto.API_HostAddress = http://localhost:5159
+
+GET {{LosCarrosDeBeto.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

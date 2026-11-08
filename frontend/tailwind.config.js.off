@@ -1,0 +1,19 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+        "./src/**/*.{html,ts}",
+    ],
+    darkMode: 'class',
+    theme: {
+        extend: {
+            colors: {
+                // Extending with our custom "Stitch" palette if needed, 
+                // though standard Tailwind colors are usually enough.
+                // We can map specific functional colors here.
+                'primary-blue': '#2563EB',
+                'sidebar-bg': '#FFFFFF',
+            }
+        },
+    },
+    plugins: [],
+}

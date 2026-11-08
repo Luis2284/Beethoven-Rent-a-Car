@@ -1,0 +1,135 @@
+<div class="animate-enter max-w-7xl mx-auto p-8">
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">Galería de Vehículos</h1>
+            <p class="text-slate-500 dark:text-slate-400 font-medium mt-1">Gestión de flota premium</p>
+        </div>
+        <button
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-blue-600/20 flex items-center gap-2 transition-all transform hover:-translate-y-0.5"
+            routerLink="/vehicles/new">
+            <span class="material-symbols-outlined">add</span> NUEVO VEHÍCULO
+        </button>
+    </header>
+
+    <!-- Tutorial de gestión de vehículos -->
+    <section class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 mb-8">
+        <h2 class="text-xl font-bold text-slate-800 dark:text-white mb-2">
+            Tutorial rápido: Gestión de vehículos
+        </h2>
+
+        <p class="text-slate-500 dark:text-slate-400 mb-4">
+            Sigue estos pasos para administrar correctamente los vehículos registrados en Beethoven Rent a Car.
+        </p>
+
+        <ol class="space-y-2 text-slate-700 dark:text-slate-300" style="list-style-type: decimal; padding-left: 1.5rem;">
+            <li>Registrar un nuevo vehículo.</li>
+            <li>Consultar la información de la flota.</li>
+            <li>Editar los datos de un vehículo.</li>
+            <li>Consultar los gastos asociados.</li>
+        </ol>
+    </section>
+
+    <div *ngIf="errorMessage"
+        class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6 flex items-center gap-3">
+        <span class="material-symbols-outlined">error</span>
+        {{ errorMessage }}
+    </div>
+
+    <!-- Loading State -->
+    <div class="flex flex-col items-center justify-center py-20" *ngIf="isLoading">
+        <div class="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
+        <p class="text-slate-500 font-medium">Cargando flota...</p>
+    </div>
+
+    <!-- Vehicle Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        *ngIf="!isLoading && vehicles.length > 0">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden group hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col"
+            *ngFor="let vehicle of vehicles">
+
+            <!-- IMAGE HEADER -->
+            <div class="relative h-48 bg-slate-100 dark:bg-slate-700">
+                <div *ngIf="vehicle.imageUrl" class="w-full h-full bg-cover bg-center"
+                    [style.background-image]="'url(http://localhost:5159/' + vehicle.imageUrl + ')'">
+                    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+
+                <div *ngIf="!vehicle.imageUrl"
+                    class="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600">
+                    <span class="material-symbols-outlined text-6xl">directions_car</span>
+                </div>
+
+                <!-- Status Badge -->
+                <div class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm backdrop-blur-md"
+                    [ngClass]="{
+                        'bg-emerald-100/90 text-emerald-800': vehicle.status === 'Available',
+                        'bg-amber-100/90 text-amber-800': vehicle.status === 'Rented',
+                        'bg-red-100/90 text-red-800': vehicle.status === 'Maintenance'
+                     }">
+                    {{ vehicle.status === 'Maintenance' ? 'Mantenimiento' : (vehicle.status === 'Rented' ? 'Alquilado' :
+                    'Disponible') }}
+                </div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="p-5 flex-1 flex flex-col">
+                <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1">{{ vehicle.brand }} {{ vehicle.model
+                    }}</h2>
+                <span class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-3">{{ vehicle.year }}</span>
+
+                <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4 line-clamp-2">
+                    {{ vehicle.description || 'Sin descripción disponible.' }}
+                </p>
+
+                <div
+                    class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    <span class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-base">palette</span> {{ vehicle.color }}
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-base">confirmation_number</span> {{ vehicle.plate |
+                        uppercase }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- ACTIONS -->
+            <div
+                class="p-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700 flex items-center justify-end gap-2">
+                <button
+                    class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    [class.text-red-500]="vehicle.status === 'Maintenance'" (click)="toggleMaintenance(vehicle)"
+                    title="Alternar Mantenimiento">
+                    <span class="material-symbols-outlined">build</span>
+                </button>
+                <button
+                    class="px-3 py-1.5 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    [routerLink]="['/vehicles/edit', vehicle.id]">
+                    EDITAR
+                </button>
+                <button
+                    class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-600 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+                    [routerLink]="['/vehicles', vehicle.id, 'expenses']">
+                    GASTOS
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="flex flex-col items-center justify-center py-20 text-center"
+        *ngIf="!isLoading && !errorMessage && vehicles.length === 0">
+        <div
+            class="w-20 h-20 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-slate-400 mb-4">
+            <span class="material-symbols-outlined text-4xl">no_crash</span>
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 dark:text-white mb-2">No hay vehículos registrados</h3>
+        <p class="text-slate-500 dark:text-slate-400 mb-6">Comienza registrando el primer vehículo de tu flota premium.
+        </p>
+        <button
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-xl shadow-lg shadow-blue-600/20 transition-transform hover:-translate-y-0.5"
+            routerLink="/vehicles/new">
+            Registrar Vehículo
+        </button>
+    </div>
+</div>

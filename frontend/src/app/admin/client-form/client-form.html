@@ -1,0 +1,176 @@
+<div class="animate-enter flex justify-center p-8">
+    <div
+        class="w-full max-w-4xl bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8">
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-1">{{ isEditing ? 'Editar Cliente' : 'Nuevo
+                Cliente' }}</h1>
+            <p class="text-slate-500 dark:text-slate-400 font-medium">Información personal del cliente</p>
+        </div>
+
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-6">
+
+            <!-- Personal Info Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Nombre
+                        Completo</label>
+                    <div class="relative">
+                        <input type="text" formControlName="name" placeholder="Ej. Juan Perez"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">person</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Documento de
+                        Identidad</label>
+                    <div class="relative">
+                        <input type="text" formControlName="document" placeholder="Ej. 12345678"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">badge</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">No. Licencia
+                        Conducción</label>
+                    <div class="relative">
+                        <input type="text" formControlName="licenseNumber" placeholder="Ej. 9876543210"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">drive_eta</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Teléfono</label>
+                    <div class="relative">
+                        <input type="text" formControlName="phone" placeholder="Ej. 3001234567"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">phone</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Correo
+                        Electrónico</label>
+                    <div class="relative">
+                        <input type="email" formControlName="email" placeholder="Ej. juan@email.com"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">email</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Ciudad</label>
+                    <div class="relative">
+                        <input type="text" formControlName="city" placeholder="Ej. Valledupar"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">location_city</span>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Dirección de
+                        Residencia</label>
+                    <div class="relative">
+                        <input type="text" formControlName="address" placeholder="Ej. Cra 12 # 34-56"
+                            class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <span class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">home</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Representative Section -->
+            <div class="border-t border-slate-100 dark:border-slate-700 mt-2 pt-6">
+                <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Representante Legal (Empresas)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Nombre
+                            Representante</label>
+                        <div class="relative">
+                            <input type="text" formControlName="representativeName" placeholder="Opcional"
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                            <span
+                                class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">person_outline</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Documento
+                            Representante</label>
+                        <div class="relative">
+                            <input type="text" formControlName="representativeDocument" placeholder="Opcional"
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                            <span class="material-symbols-outlined absolute left-3 top-3.5 text-slate-400">badge</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Section -->
+            <div class="border-t border-slate-100 dark:border-slate-700 mt-2 pt-6">
+                <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-4">Documentación Digital</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <!-- ID File -->
+                    <div
+                        class="p-4 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Cédula de
+                            Ciudadanía</label>
+                        <div class="flex items-center gap-3">
+                            <button type="button" (click)="fileInputDoc.click()"
+                                class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 text-sm font-medium px-4 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">cloud_upload</span> Seleccionar
+                            </button>
+                            <span class="text-xs font-bold text-emerald-600 flex items-center gap-1"
+                                *ngIf="clientForm.get('documentUrl')?.value">
+                                <span class="material-symbols-outlined text-base">check_circle</span> Cargado
+                            </span>
+                            <span class="text-xs text-slate-400" *ngIf="!clientForm.get('documentUrl')?.value">Sin
+                                archivo</span>
+                            <input #fileInputDoc type="file" (change)="onFileSelected($event, 'document')"
+                                class="hidden">
+                        </div>
+                    </div>
+
+                    <!-- License File -->
+                    <div
+                        class="p-4 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl">
+                        <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Licencia de
+                            Conducción</label>
+                        <div class="flex items-center gap-3">
+                            <button type="button" (click)="fileInputLic.click()"
+                                class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 text-sm font-medium px-4 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">cloud_upload</span> Seleccionar
+                            </button>
+                            <span class="text-xs font-bold text-emerald-600 flex items-center gap-1"
+                                *ngIf="clientForm.get('licenseUrl')?.value">
+                                <span class="material-symbols-outlined text-base">check_circle</span> Cargado
+                            </span>
+                            <span class="text-xs text-slate-400" *ngIf="!clientForm.get('licenseUrl')?.value">Sin
+                                archivo</span>
+                            <input #fileInputLic type="file" (change)="onFileSelected($event, 'license')"
+                                class="hidden">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-700 mt-4">
+                <button type="button" routerLink="/clients"
+                    class="px-6 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    CANCELAR
+                </button>
+                <button type="submit" [disabled]="clientForm.invalid || isLoading"
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-8 rounded-xl shadow-lg shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform active:scale-95 flex items-center gap-2">
+                    <span *ngIf="isLoading"
+                        class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    {{ isLoading ? 'GUARDANDO...' : (isEditing ? 'GUARDAR CAMBIOS' : 'REGISTRAR') }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

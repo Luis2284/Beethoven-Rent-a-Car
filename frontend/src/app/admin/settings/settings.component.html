@@ -1,0 +1,65 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white font-heading">Configuración</h1>
+            <p class="text-slate-500 text-sm mt-1">Gestión avanzada del sistema y base de datos.</p>
+        </div>
+    </div>
+
+    <!-- Database Management Card -->
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+        <div class="flex items-center gap-4 mb-6">
+            <div
+                class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">database</span>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-800 dark:text-white">Base de Datos Portátil</h3>
+                <p class="text-slate-500 text-sm">Gestiona la información de la aplicación (SQLite Local).</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Export -->
+            <div
+                class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex flex-col items-center text-center">
+                <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">download</span>
+                <h4 class="font-bold text-slate-700 dark:text-slate-300">Copia de Seguridad</h4>
+                <p class="text-xs text-slate-500 mt-2 mb-4">Descarga el archivo completo (.db) con toda la información.
+                </p>
+                <button (click)="exportDatabase()"
+                    class="mt-auto w-full py-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                    Descargar Copia
+                </button>
+            </div>
+
+            <!-- Import -->
+            <div
+                class="p-6 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex flex-col items-center text-center">
+                <span class="material-symbols-outlined text-4xl text-slate-400 mb-3">upload</span>
+                <h4 class="font-bold text-slate-700 dark:text-slate-300">Restaurar Datos</h4>
+                <p class="text-xs text-slate-500 mt-2 mb-4">Sube un archivo (.db) para reemplazar la base de datos
+                    actual.</p>
+
+                <label class="mt-auto w-full cursor-pointer">
+                    <span
+                        class="block w-full py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-colors">
+                        Seleccionar Archivo
+                    </span>
+                    <input type="file" accept=".db" (change)="importDatabase($event)" class="hidden">
+                </label>
+            </div>
+        </div>
+
+        <div
+            class="mt-6 flex items-start gap-3 p-4 bg-yellow-50 dark:bg-yellow-900/10 rounded-xl border border-yellow-100 dark:border-yellow-900/20">
+            <span class="material-symbols-outlined text-yellow-600 dark:text-yellow-500 mt-0.5">info</span>
+            <p class="text-sm text-yellow-800 dark:text-yellow-200 leading-relaxed">
+                <span class="font-bold">Nota Importante:</span> La restauración de la base de datos requerirá reiniciar
+                la aplicación para que los cambios surtan efecto. Asegúrese de tener una copia de seguridad antes de
+                restaurar.
+            </p>
+        </div>
+    </div>
+</div>

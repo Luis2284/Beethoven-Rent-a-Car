@@ -1,0 +1,178 @@
+<div class="animate-enter max-w-7xl mx-auto p-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">Contabilidad y Finanzas</h1>
+        <p class="text-slate-500 dark:text-slate-400 font-medium mt-1">Monitor de ingresos y gastos.</p>
+    </div>
+
+    <!-- Filters Bar -->
+    <div
+        class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm mb-8">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Filtros de Consulta</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Administrator Filter -->
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Filtrar por
+                    Administrador</label>
+                <select [(ngModel)]="selectedAdminId" (change)="onAdminChange()"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all outline-none">
+                    <option [ngValue]="undefined">Todos los Administradores</option>
+                    <option *ngFor="let admin of administrators" [ngValue]="admin.id">{{ admin.name }}</option>
+                </select>
+            </div>
+
+            <!-- Vehicle Filter -->
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Filtrar por
+                    Vehículo</label>
+                <select [(ngModel)]="selectedVehicleId" (change)="onVehicleChange()"
+                    class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all outline-none">
+                    <option [ngValue]="undefined">Todos los Vehículos</option>
+                    <option *ngFor="let vehicle of filteredVehicles" [ngValue]="vehicle.id">{{ vehicle.brand }} {{
+                        vehicle.model }} ({{ vehicle.plate }})</option>
+                </select>
+            </div>
+
+            <!-- Date Presets -->
+            <div class="flex flex-col col-span-1 md:col-span-3 lg:col-span-1">
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Periodo</label>
+                <div class="flex gap-2 flex-wrap mb-3">
+                    <button (click)="setDateFilter('thisMonth')"
+                        [ngClass]="activeRangeType === 'thisMonth' ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-600'"
+                        class="flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors">
+                        Este Mes <span class="text-xs opacity-75">{{ getFilterLabel('thisMonth') }}</span>
+                    </button>
+                    <button (click)="setDateFilter('lastMonth')"
+                        [ngClass]="activeRangeType === 'lastMonth' ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-600'"
+                        class="flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors">
+                        Mes Anterior <span class="text-xs opacity-75">{{ getFilterLabel('lastMonth') }}</span>
+                    </button>
+                    <button (click)="setDateFilter('year')"
+                        [ngClass]="activeRangeType === 'year' ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-600'"
+                        class="flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors">
+                        Año <span class="text-xs opacity-75">{{ getFilterLabel('year') }}</span>
+                    </button>
+                    <button (click)="setDateFilter('all')"
+                        [ngClass]="activeRangeType === 'all' ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-600'"
+                        class="flex-1 px-3 py-2 text-sm font-medium rounded-lg transition-colors">
+                        Todo
+                    </button>
+                    <button (click)="setDateFilter('custom')"
+                        [ngClass]="activeRangeType === 'custom' ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-500 hover:text-white dark:hover:bg-emerald-600'"
+                        class="px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center justify-center">
+                        <span class="material-symbols-outlined text-lg">calendar_month</span>
+                    </button>
+                </div>
+
+                <!-- Custom Date Range Inputs (Visible only when custom is selected) -->
+                <div *ngIf="activeRangeType === 'custom'" class="flex gap-2 animate-enter">
+                    <div class="flex-1">
+                        <input type="date" [(ngModel)]="startDate" (change)="onDateChange()"
+                            class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div class="flex-1">
+                        <input type="date" [(ngModel)]="endDate" (change)="onDateChange()"
+                            class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Income -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div class="flex items-center gap-4 mb-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-2xl">arrow_upward</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-white">Ingresos</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Total Alquileres</p>
+                </div>
+            </div>
+            <div class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                {{ balance.totalIncome | currency:'USD':'symbol':'1.0-0' }}
+            </div>
+        </div>
+
+        <!-- Expenses -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div class="flex items-center gap-4 mb-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/20 text-red-500 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-2xl">arrow_downward</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-white">Gastos</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Mantenimiento y Seguros</p>
+                </div>
+            </div>
+            <div class="text-3xl font-bold text-red-600 dark:text-red-400">
+                {{ balance.totalExpenses | currency:'USD':'symbol':'1.0-0' }}
+            </div>
+        </div>
+
+        <!-- Net Balance -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div class="flex items-center gap-4 mb-4">
+                <div
+                    class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-500 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-white">Balance Neto</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Utilidad Calculada</p>
+                </div>
+            </div>
+            <div class="text-3xl font-bold"
+                [ngClass]="{'text-emerald-600 dark:text-emerald-400': balance.netBalance >= 0, 'text-red-600 dark:text-red-400': balance.netBalance < 0}">
+                {{ balance.netBalance | currency:'USD':'symbol':'1.0-0' }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Transactions Table -->
+    <div
+        class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-100 dark:border-slate-700">
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white">Movimientos Recientes</h3>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-700">
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Fecha</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Descripción</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Tipo</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Monto</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                    <tr *ngFor="let element of transactions"
+                        class="hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+                        <td class="p-4 text-sm text-slate-600 dark:text-slate-300">{{element.date | date:'shortDate'}}
+                        </td>
+                        <td class="p-4 text-sm text-slate-800 dark:text-white font-medium">{{element.description}}</td>
+                        <td class="p-4">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                                [ngClass]="element.type === 'Ingreso' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'">
+                                {{element.type}}
+                            </span>
+                        </td>
+                        <td class="p-4 text-right text-sm font-bold"
+                            [ngClass]="element.type === 'Ingreso' ? 'text-emerald-600' : 'text-red-600'">
+                            {{element.amount | currency:'USD':'symbol':'1.0-0'}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="transactions.length === 0" class="p-8 text-center text-slate-500 italic">
+            No hay movimientos registrados en este periodo.
+        </div>
+    </div>
+</div>

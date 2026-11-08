@@ -1,0 +1,140 @@
+<div class="p-8 print:hidden">
+    <h1 class="text-2xl font-bold mb-6 text-slate-800 dark:text-white">Historial de Contratos</h1>
+
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-8">
+        <div class="flex gap-4 items-end">
+            <div class="flex-1">
+                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Vehículo (Placa)</label>
+                <select [(ngModel)]="plate"
+                    class="w-full px-4 py-2 border rounded-lg bg-slate-50 dark:bg-slate-900 dark:border-slate-700 dark:text-white">
+                    <option value="">Seleccione...</option>
+                    <option *ngFor="let v of vehicles" [value]="v.plate">{{v.plate}} - {{v.brand}}</option>
+                </select>
+            </div>
+            <button (click)="search()"
+                class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-blue-700 transition mb-0.5">
+                Buscar
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700">
+                <tr>
+                    <th class="p-4 text-xs font-bold text-slate-500 uppercase">Fecha</th>
+                    <th class="p-4 text-xs font-bold text-slate-500 uppercase">Vehículo</th>
+                    <th class="p-4 text-xs font-bold text-slate-500 uppercase">Cliente</th>
+                    <th class="p-4 text-xs font-bold text-slate-500 uppercase">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                <tr *ngFor="let rental of allRentals">
+                    <td class="p-4">{{rental.startDate | date:'shortDate'}}</td>
+                    <td class="p-4 font-bold">{{rental.vehicle?.plate}}</td>
+                    <td class="p-4">{{rental.client?.name}}</td>
+                    <td class="p-4">
+                        <button (click)="selectRentalFromTable(rental)"
+                            class="text-blue-600 hover:text-blue-800 font-bold text-sm">Ver Detalles</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- CONTRACT PRINT TEMPLATE -->
+<div *ngIf="foundRental"
+    class="fixed inset-0 z-50 bg-black/80 flex justify-center overflow-y-auto p-8 backdrop-blur-sm print:p-0 print:bg-white print:static print:block">
+    <div
+        class="bg-white text-slate-900 w-[8.5in] min-h-[11in] p-[1in] shadow-2xl relative print:shadow-none print:w-full print:h-full print:p-0">
+
+        <!-- CLOSE BUTTON (Hidden on Print) -->
+        <button (click)="foundRental = null"
+            class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 p-2 rounded-full print:hidden">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <!-- HEADER -->
+        <div class="flex justify-between items-start mb-12 border-b-2 border-slate-900 pb-6">
+            <div>
+                <h1 class="text-4xl font-black uppercase tracking-tighter mb-2">Contrato de Alquiler</h1>
+                <p class="text-sm font-bold text-slate-500 uppercase tracking-widest">Nº: {{foundRental.id}}</p>
+            </div>
+            <div class="text-right">
+                <h2 class="text-xl font-bold uppercase">{{foundRental.vehicle?.administrator?.name || "Beto's Cars"}}
+                </h2>
+                <p class="text-xs text-slate-500">Doc: {{foundRental.vehicle?.administrator?.document ||
+                    "900.123.456-7"}}</p>
+                <p class="text-xs text-slate-500">{{foundRental.vehicle?.administrator?.address || "Calle 123 # 45-67"}}
+                </p>
+            </div>
+        </div>
+
+        <!-- BODY -->
+        <div class="space-y-8 text-sm leading-relaxed text-justify">
+            <p>
+                Entre los suscritos a saber: <strong>{{foundRental.vehicle?.administrator?.name ||
+                    "__________________________"}}</strong>,
+                mayor de edad, vecino de <strong>{{foundRental.vehicle?.administrator?.city ||
+                    "__________________________"}}</strong>,
+                identificado con la cédula de ciudadanía N.° <strong>{{foundRental.vehicle?.administrator?.document ||
+                    "__________________________"}}</strong>,
+                domiciliado en <strong>{{foundRental.vehicle?.administrator?.address ||
+                    "__________________________"}}</strong>,
+                quien en adelante se llamará <strong>EL ARRENDADOR</strong>,
+                y por otra parte <strong>{{foundRental.client?.name}}</strong>, identificado con CC
+                <strong>{{foundRental.client?.document}}</strong>,
+                quien en adelante se llamará <strong>EL ARRENDATARIO</strong>, hemos convenido celebrar el presente
+                contrato de alquiler de vehículo automotor.
+            </p>
+
+            <div class="grid grid-cols-2 gap-8 my-8">
+                <div class="border p-4 rounded-lg bg-slate-50">
+                    <h3 class="font-bold border-b pb-2 mb-2 uppercase text-xs tracking-wider">Vehículo</h3>
+                    <p><strong>Marca:</strong> {{foundRental.vehicle?.brand}}</p>
+                    <p><strong>Modelo:</strong> {{foundRental.vehicle?.model}}</p>
+                    <p><strong>Placa:</strong> {{foundRental.vehicle?.plate}}</p>
+                </div>
+                <div class="border p-4 rounded-lg bg-slate-50">
+                    <h3 class="font-bold border-b pb-2 mb-2 uppercase text-xs tracking-wider">Condiciones</h3>
+                    <p><strong>Inicio:</strong> {{foundRental.startDate | date:'mediumDate'}}</p>
+                    <p><strong>Fin:</strong> {{foundRental.endDate | date:'mediumDate'}}</p>
+                    <p><strong>Fin:</strong> {{foundRental.endDate | date:'mediumDate'}}</p>
+                </div>
+            </div>
+
+            <p>
+                <strong>CLÁUSULA PRIMERA:</strong> EL ARRENDADOR entrega a EL ARRENDATARIO el vehículo descrito en
+                perfecto estado de funcionamiento.
+            </p>
+            <p>
+                <strong>CLÁUSULA SEGUNDA:</strong> EL ARRENDATARIO se compromete a devolver el vehículo en las mismas
+                condiciones, salvo el desgaste natural.
+            </p>
+        </div>
+
+        <!-- FOOTER / SIGNATURES -->
+        <div class="mt-24 grid grid-cols-2 gap-12">
+            <div class="border-t border-slate-900 pt-2">
+                <p class="font-bold uppercase text-xs">El Arrendador</p>
+                <p class="text-xs text-slate-500">{{foundRental.vehicle?.administrator?.name}}</p>
+                <p class="text-[10px] text-slate-400">CC: {{foundRental.vehicle?.administrator?.document}}</p>
+            </div>
+            <div class="border-t border-slate-900 pt-2">
+                <p class="font-bold uppercase text-xs">El Arrendatario</p>
+                <p class="text-xs text-slate-500">{{foundRental.client?.name}}</p>
+                <p class="text-[10px] text-slate-400">CC: {{foundRental.client?.document}}</p>
+            </div>
+        </div>
+
+        <!-- PRINT BUTTON (Hidden on Print) -->
+        <div class="absolute bottom-8 right-8 print:hidden">
+            <button onclick="window.print()"
+                class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 flex items-center gap-2 shadow-xl hover:translate-y-[-2px] transition-all">
+                <span class="material-symbols-outlined">print</span>
+                IMPRIMIR CONTRATO
+            </button>
+        </div>
+    </div>
+</div>

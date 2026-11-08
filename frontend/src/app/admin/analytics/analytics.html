@@ -1,0 +1,172 @@
+<div class="animate-enter max-w-7xl mx-auto p-8 space-y-8">
+
+    <!-- Standard Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">Centro de Inteligencia</h1>
+            <p class="text-slate-500 dark:text-slate-400 font-medium mt-1">Monitoreo avanzado de flota y rendimiento
+                financiero</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <div
+                class="bg-white dark:bg-slate-800 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold">
+                    A
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sesión Activa</span>
+                    <span class="text-xs font-bold text-slate-800 dark:text-white">Admin User</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Standard Metrics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Revenue Card -->
+        <div
+            class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm flex flex-col justify-between h-full">
+            <div class="flex justify-between items-start mb-4">
+                <div
+                    class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                    <span class="material-symbols-outlined">payments</span>
+                </div>
+                <span
+                    class="flex items-center text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-lg text-xs font-bold">
+                    <span class="material-symbols-outlined text-sm mr-1">trending_up</span> +12.5%
+                </span>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Ingresos
+                    Totales</span>
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white">${{totalRevenue | number:'1.0-0'}}</h3>
+            </div>
+        </div>
+
+        <!-- Active Rentals Card -->
+        <div
+            class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm flex flex-col justify-between h-full">
+            <div class="flex justify-between items-start mb-4">
+                <div
+                    class="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+                    <span class="material-symbols-outlined">directions_car</span>
+                </div>
+                <span
+                    class="flex items-center text-sky-600 bg-sky-50 dark:bg-sky-900/30 px-2 py-1 rounded-lg text-xs font-bold">
+                    Activos
+                </span>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">En Curso</span>
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white">{{activeRentalsCount}}</h3>
+            </div>
+        </div>
+
+        <!-- Completed Rentals Card -->
+        <div
+            class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm flex flex-col justify-between h-full">
+            <div class="flex justify-between items-start mb-4">
+                <div
+                    class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                    <span class="material-symbols-outlined">task_alt</span>
+                </div>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Completados</span>
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white">{{completedRentalsCount}}</h3>
+            </div>
+        </div>
+
+        <!-- Average Ticket Card -->
+        <div
+            class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm flex flex-col justify-between h-full">
+            <div class="flex justify-between items-start mb-4">
+                <div
+                    class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                </div>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-1">Ticket
+                    Promedio</span>
+                <h3 class="text-3xl font-bold text-slate-800 dark:text-white">${{averageTicket | number:'1.0-0'}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Standard Table Section -->
+    <div
+        class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+            <div>
+                <h3 class="font-bold text-slate-800 dark:text-white text-lg">Transacciones Recientes</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Historial completo de operaciones</p>
+            </div>
+            <button
+                class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 hover:opacity-90 transition-opacity">
+                <span class="material-symbols-outlined text-sm">download</span> Exportar
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-700">
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-20">ID</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Vehículo</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Cliente</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Monto</th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Estado
+                        </th>
+                        <th class="p-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                    <tr *ngFor="let rental of dataSource"
+                        class="group hover:bg-slate-50 dark:hover:bg-slate-900/50 transition-colors">
+                        <td class="p-4">
+                            <span
+                                class="font-mono text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">#{{rental.id}}</span>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-slate-800 dark:text-white text-sm">{{rental.vehicle?.brand}}
+                                    {{rental.vehicle?.model}}</span>
+                                <span class="text-xs text-slate-500 uppercase">{{rental.vehicle?.plate}}</span>
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex items-center gap-2">
+                                <div
+                                    class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300">
+                                    {{rental.client?.name?.charAt(0)}}
+                                </div>
+                                <span
+                                    class="text-sm font-medium text-slate-700 dark:text-slate-200">{{rental.client?.name}}</span>
+                            </div>
+                        </td>
+                        <td class="p-4 text-right">
+                            <span class="font-bold text-slate-800 dark:text-white">${{rental.totalCost | number}}</span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border"
+                                [ngClass]="{
+                                    'bg-emerald-50 text-emerald-700 border-emerald-100': rental.status === 'Completed',
+                                    'bg-blue-50 text-blue-700 border-blue-100': rental.status === 'Active'
+                                }">
+                                {{rental.status === 'Active' ? 'En Curso' : 'Finalizado'}}
+                            </span>
+                        </td>
+                        <td class="p-4 text-center">
+                            <button (click)="openContract(rental)"
+                                class="text-slate-400 hover:text-blue-600 transition-colors" title="Ver Contrato">
+                                <span class="material-symbols-outlined text-xl">description</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

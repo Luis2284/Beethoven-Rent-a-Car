@@ -1,0 +1,111 @@
+<mxfile host="Electron" modified="2026-01-27T14:20:00.000Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="modern_etag" version="21.6.8" type="device">
+  <diagram id="Contexto" name="Nivel 1: Contexto">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Background/Title -->
+        <mxCell id="title" value="Diagrama de Contexto: Los Carros de Beto" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="360" y="40" width="480" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Main System (Modern Style) -->
+        <mxCell id="sys" value="&lt;b&gt;Los Carros de Beto&lt;/b&gt;&lt;br&gt;Sistema de Gestión de Alquiler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;shadow=1;arcSize=20;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="480" y="240" width="240" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- Users -->
+        <mxCell id="admin" value="Administrador" style="shape=mxgraph.basic.icon;icon=mxgraph.basic.user;verticalLabelPosition=bottom;verticalAlign=top;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;fontSize=12;" vertex="1" parent="1">
+           <mxGeometry x="200" y="280" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="client" value="Cliente" style="shape=mxgraph.basic.icon;icon=mxgraph.basic.user;verticalLabelPosition=bottom;verticalAlign=top;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;fontSize=12;" vertex="1" parent="1">
+           <mxGeometry x="200" y="160" width="60" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- External Systems -->
+        <mxCell id="simit" value="&lt;b&gt;API SIMIT&lt;/b&gt;&lt;br&gt;Verificación de Multas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+          <mxGeometry x="840" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="gemini" value="&lt;b&gt;API Google Gemini&lt;/b&gt;&lt;br&gt;Inteligencia Artificial" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="1">
+          <mxGeometry x="840" y="360" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Connectors -->
+        <mxCell id="c1" value="Gestiona flota" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;" edge="1" parent="1" source="admin" target="sys">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="Alquila vehículo" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;strokeWidth=2;" edge="1" parent="1" source="client" target="sys">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="Verifica licencias" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;entryX=0;entryY=0.5;strokeWidth=2;" edge="1" parent="1" source="sys" target="simit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="Análisis de datos" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;entryX=0;entryY=0.5;strokeWidth=2;" edge="1" parent="1" source="sys" target="gemini">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="Contenedor" name="Nivel 2: Contenedores">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="c_0" />
+        <mxCell id="c_1" parent="c_0" />
+
+        <!-- Title -->
+        <mxCell id="c_title" value="Diagrama de Contenedores y Tecnologías" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="c_1">
+          <mxGeometry x="360" y="40" width="480" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- System Boundary -->
+        <mxCell id="boundary" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#444444;strokeWidth=2;dashed=1;arcSize=10;" vertex="1" parent="c_1">
+          <mxGeometry x="280" y="120" width="600" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="boundary_lbl" value="Plataforma Los Carros de Beto" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;fontColor=#666666;" vertex="1" parent="c_1">
+          <mxGeometry x="280" y="90" width="250" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- SPA Angular -->
+        <mxCell id="spa" value="&lt;b&gt;Single Page Application&lt;/b&gt;&lt;br&gt;Angular 21&lt;br&gt;&lt;i&gt;Web, Responsive, TypeScript&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e51c23;fontColor=#ffffff;strokeColor=#B00020;shadow=1;arcSize=20;" vertex="1" parent="c_1">
+          <mxGeometry x="360" y="160" width="200" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- API Backend .NET -->
+        <mxCell id="api" value="&lt;b&gt;Backend API&lt;/b&gt;&lt;br&gt;.NET 10&lt;br&gt;&lt;i&gt;C#, Web API, Entity Framework&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5F0B;shadow=1;arcSize=20;" vertex="1" parent="c_1">
+          <mxGeometry x="360" y="360" width="200" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Database -->
+        <mxCell id="db" value="&lt;b&gt;Base de Datos&lt;/b&gt;&lt;br&gt;SQL Server&lt;br&gt;&lt;i&gt;Transaccional, Relacional&lt;/i&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" vertex="1" parent="c_1">
+          <mxGeometry x="680" y="360" width="120" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- External -->
+        <mxCell id="ext_simit" value="API SIMIT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;fontColor=#333333;strokeColor=#333333;" vertex="1" parent="c_1">
+          <mxGeometry x="680" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Relations -->
+        <mxCell id="r1" value="HTTPS / JSON" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=2;labelBackgroundColor=#ffffff;" edge="1" parent="c_1" source="spa" target="api">
+          <mxGeometry relative="1" as="geometry">
+             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r2" value="EF Core / SQL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;labelBackgroundColor=#ffffff;" edge="1" parent="c_1" source="api" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" value="HTTP Client" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;entryX=0;entryY=0.5;strokeWidth=2;" edge="1" parent="c_1" source="api" target="ext_simit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Annotations -->
+         <mxCell id="note1" value="Frontend moderno utilizando Angular 21 para una experiencia fluida" style="shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="c_1">
+          <mxGeometry x="120" y="160" width="160" height="80" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

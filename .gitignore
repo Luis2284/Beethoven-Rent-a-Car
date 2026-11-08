@@ -1,0 +1,27 @@
+﻿# Backend .NET
+**/bin/
+**/obj/
+.vs/
+
+# Frontend Angular
+**/node_modules/
+**/dist/
+**/.angular/
+
+# Bases de datos
+*.db
+*.db-shm
+*.db-wal
+
+# Configuraciones privadas
+.env
+.env.*
+**/appsettings.Development.json
+**/appsettings.Production.json
+**/secrets.json
+
+# Archivos cargados
+**/wwwroot/uploads/
+frontend_git_respaldo/
+
+**/.vs/
